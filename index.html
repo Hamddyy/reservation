@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table Reservation</title>
+  <!-- Firebase App (Core) -->
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <!-- Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+</head>
+<body>
+  <h1>Table Reservation System</h1>
+  
+  <form id="reservation-form">
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <input type="text" id="date" placeholder="Enter reservation date" required>
+    <button type="submit">Reserve</button>
+  </form>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYzmLqDZQx6D0MBS7pcKM4ICSykgSyQiU",
+      authDomain: "reservation-20.firebaseapp.com",
+      projectId: "reservation-20",
+      storageBucket: "reservation-20.firebasestorage.app",
+      messagingSenderId: "238046004178",
+      appId: "1:238046004178:web:38122eab26f1508dd4fe0b",
+      measurementId: "G-NMP3T3V30T"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Form submission handler
+    document.getElementById('reservation-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const date = document.getElementById('date').value;
+
+      try {
+        // Add data to Firestore
+        await db.collection('reservations').add({
+          name: name,
+          date: date,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('Reservation added successfully!');
+      } catch (error) {
+        console.error('Error adding reservation: ', error);
+        alert('Failed to add reservation. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
