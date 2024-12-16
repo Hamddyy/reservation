@@ -1,71 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Table Reservation</title>
-  <!-- Firebase App (Core) -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-  <!-- Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+  <title>نموذج إدخال البيانات</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 </head>
 <body>
-  <h1>Table Reservation System</h1>
-  
-  <!-- Reservation Form -->
-  <form id="reservation-form">
-    <label for="name">Name:</label>
-    <input type="text" id="name" placeholder="Enter your name" required>
-    <br>
-    <label for="date">Reservation Date:</label>
-    <input type="date" id="date" required>
-    <br>
-    <button type="submit">Reserve</button>
+
+  <h2>نموذج إضافة حجز</h2>
+  <form id="reservationForm">
+    <label for="name">الاسم:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label for="email">البريد الإلكتروني:</label>
+    <input type="email" id="email" required><br><br>
+
+    <label for="date">التاريخ:</label>
+    <input type="date" id="date" required><br><br>
+
+    <label for="time">الوقت:</label>
+    <input type="time" id="time" required><br><br>
+
+    <label for="guests">عدد الضيوف:</label>
+    <input type="number" id="guests" required><br><br>
+
+    <button type="submit">إرسال</button>
   </form>
 
-  <script>
-    // Firebase Configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBYzmLqDZQx6D0MBS7pcKM4ICSykgSyQiU",
-      authDomain: "reservation-20.firebaseapp.com",
-      projectId: "reservation-20",
-      storageBucket: "reservation-20.firebasestorage.app",
-      messagingSenderId: "238046004178",
-      appId: "1:238046004178:web:38122eab26f1508dd4fe0b",
-      measurementId: "G-NMP3T3V30T"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Form Submission Handler
-    document.getElementById('reservation-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // Get form data
-      const name = document.getElementById('name').value;
-      const date = document.getElementById('date').value;
-
-      try {
-        // Add data to Firestore
-        await db.collection('reservations').add({
-          name: name,
-          date: date,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        // Success message
-        alert('Reservation added successfully!');
-        // Clear form
-        document.getElementById('reservation-form').reset();
-      } catch (error) {
-        // Error handling
-        console.error('Error adding reservation:', error);
-        alert('Failed to add reservation. Check console for details.');
-      }
-    });
-  </script>
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
